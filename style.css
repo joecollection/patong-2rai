@@ -169,14 +169,13 @@ body::before {
   overflow: hidden;
 }
 .hero-img-wrap img {
-    width: 100%; height: 100%;
-    object-fit: contain; /* เปลี่ยนเป็น contain เพื่อให้รูปย่อขนาดลงมาอยู่ในกรอบทั้งหมด */
-    background-color: #0d0f14; /* เพิ่มพื้นหลังสีมืดเข้าไปรองรับส่วนที่ว่าง */
-    object-position: center;
-    display: block;
-    filter: brightness(.75) saturate(.9);
-    transition: transform .6s ease, filter .6s ease;
-  }
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: brightness(.75) saturate(.9);
+  transition: transform .6s ease, filter .6s ease;
+}
 .hero-img-wrap:hover img { transform: scale(1.03); filter: brightness(.85) saturate(1); }
 
 .hero-overlay {
@@ -588,20 +587,16 @@ body::before {
   border-radius: 3px;
   overflow: hidden;
   border: 1px solid var(--border);
-  /* 1. ลบ aspect-ratio: 4/3; ออก เพื่อไม่ให้บังคับรูปเป็นสี่เหลี่ยมผืนผ้า */
+  aspect-ratio: 4/3;
   cursor: pointer;
   transition: border-color .3s;
-  background: #0d0f14; /* ใส่พื้นหลังสีมืดกันเผื่อไว้ */
 }
 .gallery-item:hover { border-color: var(--gold); }
 .gallery-item img {
-  width: 100%; 
-  height: auto; /* 2. เปลี่ยนจาก 100% เป็น auto เพื่อให้รูปยืดสูงตามสัดส่วนจริง */
-  display: block; /* ป้องกันไม่ให้มีช่องว่างแปลกๆ ที่ฐานรูป */
-  object-fit: contain; 
+  width: 100%; height: 100%;
+  object-fit: cover;
   transition: transform .4s;
   filter: brightness(.8);
-}
 }
 .gallery-item:hover img { transform: scale(1.05); filter: brightness(.95); }
 .gallery-item .g-label {
