@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Collection — AI Land Analysis Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="generator-box" style="max-width: 780px; margin: 20px auto; padding: 24px; background: #13161e; border: 1px solid rgba(201,168,76,0.25); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 999;">
+  <h3 style="color: #c9a84c; margin-bottom: 15px; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif;">
+    <span>⚡</span> AI-POWERED LAND ANALYSIS GENERATOR
+  </h3>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 15px;">
+    <div>
+      <label style="font-size: 10px; color: #c9a84c; text-transform: uppercase; display:block; margin-bottom:4px; font-family: 'Montserrat', sans-serif;">Project Name / Title</label>
+      <input type="text" id="landName" value="Thong Lo Mixed-Use Plot" style="width:100%; padding: 10px; background: #0d0f14; border: 1px solid rgba(201,168,76,0.2); color: #f2ede6; border-radius:2px; font-family: 'Montserrat', sans-serif;">
+    </div>
+    <div>
+      <label style="font-size: 10px; color: #c9a84c; text-transform: uppercase; display:block; margin-bottom:4px; font-family: 'Montserrat', sans-serif;">Location (City/Province)</label>
+      <input type="text" id="landLocation" value="Bangkok CBD" style="width:100%; padding: 10px; background: #0d0f14; border: 1px solid rgba(201,168,76,0.2); color: #f2ede6; border-radius:2px; font-family: 'Montserrat', sans-serif;">
+    </div>
+    <div>
+      <label style="font-size: 10px; color: #c9a84c; text-transform: uppercase; display:block; margin-bottom:4px; font-family: 'Montserrat', sans-serif;">Total Asking Price (Million THB)</label>
+      <input type="number" id="askingPrice" value="1600" style="width:100%; padding: 10px; background: #0d0f14; border: 1px solid rgba(201,168,76,0.2); color: #f2ede6; border-radius:2px; font-family: 'Montserrat', sans-serif;">
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; border-top: 1px solid rgba(201,168,76,0.1); padding-top: 15px;">
+    <div>
+      <label style="font-size: 10px; color: #c9a84c; text-transform: uppercase; display:block; margin-bottom:4px; font-family: 'Montserrat', sans-serif;">จำนวนไร่ (Rai)</label>
+      <input type="number" id="landRai" value="4" min="0" style="width:100%; padding: 10px; background: #0d0f14; border: 1px solid rgba(201,168,76,0.2); color: #f2ede6; border-radius:2px; font-family: 'Montserrat', sans-serif;">
+    </div>
+    <div>
+      <label style="font-size: 10px; color: #c9a84c; text-transform: uppercase; display:block; margin-bottom:4px; font-family: 'Montserrat', sans-serif;">จำนวนงาน (Ngan)</label>
+      <input type="number" id="landNgan" value="0" min="0" max="3" style="width:100%; padding: 10px; background: #0d0f14; border: 1px solid rgba(201,168,76,0.2); color: #f2ede6; border-radius:2px; font-family: 'Montserrat', sans-serif;">
+    </div>
+    <div>
+      <label style="font-size: 10px; color: #c9a84c; text-transform: uppercase; display:block; margin-bottom:4px; font-family: 'Montserrat', sans-serif;">ตารางวา (Sq.Wah)</label>
+      <input type="number" id="landWah" value="0" min="0" max="99" style="width:100%; padding: 10px; background: #0d0f14; border: 1px solid rgba(201,168,76,0.2); color: #f2ede6; border-radius:2px; font-family: 'Montserrat', sans-serif;">
+    </div>
+  </div>
+
+  <button onclick="generateLandAnalysisWithAI()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #851c1c 0%, #a52020 50%); color: #f2ede6; border: none; font-weight: 700; cursor: pointer; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 2px; transition: background 0.3s; font-family: 'Montserrat', sans-serif;">
+    Run AI Investment Engine
+  </button>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="dot"></span><span class="tag">LISTING STATUS</span><span class="sep">|</span><span id="tickName">Thong Lo Mixed-Use Plot</span><span class="sep">·</span><span id="tickRai" class="val">4 ไร่</span></span>
+    <span class="ticker-item"><span class="dot"></span><span class="tag">TOTAL INVESTMENT</span><span class="sep">|</span><span id="tickPrice" class="val">THB 1,600,000,000</span></span>
+    <span class="ticker-item"><span class="dot"></span><span class="tag">LAND TITLE GRADE</span><span class="sep">|</span><span class="val">Chanote (โฉนด) — Freehold</span></span>
+    <span class="ticker-item"><span class="dot"></span><span class="tag">ADVISORY FIRM</span><span class="sep">|</span>JOE COLLECTION · Institutional Investment Dealmaker</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="logo">Joe <span>Collection</span></div>
+  <div class="header-badge">Exclusive Listing</div>
+</header>
+
+<div class="card-wrap">
+  <div class="profile-card">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" alt="Land view">
+      <div class="hero-overlay"></div>
+      <div class="hero-badge">🔖 Exclusive Deal</div>
+      <div class="hero-price">
+        <div class="label">Asking Price</div>
+        <div id="cardPrice" class="amount">฿1,600M<span class="unit">THB</span></div>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <div class="profile-top">
+        <div class="avatar-wrap">
+          <img class="avatar" src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=200&q=80" alt="Advisor Profile">
+          <div class="avatar-dot"></div>
+        </div>
+        <div class="profile-meta">
+          <div id="cardTitle" class="land-title">Thong Lo Mixed-Use Plot<br>Bangkok CBD</div>
+          <div id="cardSubtitle" class="land-subtitle">4 ไร่ · Prime Development Parcel</div>
+          <div class="meta-tags">
+            <span class="meta-tag">Chanote Title</span>
+            <span class="meta-tag">High Density Zone</span>
+            <span class="meta-tag">Road Access</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"><div class="divider-diamond"></div></div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div id="statRai" class="stat-val">4.00</div>
+          <div class="stat-label">Rai Total</div>
+        </div>
+        <div class="stat-card">
+          <div id="statSqM" class="stat-val">6,400</div>
+          <div class="stat-label">Sq.Metres</div>
+        </div>
+        <div class="stat-card">
+          <div id="statPerRai" class="stat-val">400M</div>
+          <div class="stat-label">THB / Rai</div>
+        </div>
+        <div class="stat-card">
+          <div id="statPerWa" class="stat-val">1.00M</div>
+          <div class="stat-label">THB / Sq.Wah</div>
+        </div>
+      </div>
+
+      <div class="desc-block">
+        <div class="desc-title">Property Overview</div>
+        <div id="propertyDesc" class="desc-text">
+          A premium contiguous development site located within a high-growth zone. Features verified Chanote title documentation and immediate access to primary public roads and utility infrastructure network. Perfect layout optimization potential for institutional investment asset placement.
+        </div>
+      </div>
+
+      <div class="desc-title">Key Property Valuation Data</div>
+      <div class="table-scroll">
+        <table class="data-table" id="valuationTable">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Calculated Value</th>
+              <th>Benchmark Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Land Metric Scale</td>
+              <td id="tableArea" class="highlight">4 ไร่ (6,400 m²)</td>
+              <td><span class="pill">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td>Gross Deal Value</td>
+              <td id="tableTotal" class="highlight">THB 1,600,000,000</td>
+              <td><span class="pill">✓ Secure Target</span></td>
+            </tr>
+            <tr>
+              <td>Calculated Rate / Rai</td>
+              <td id="tablePerRai" class="highlight">THB 400,000,000</td>
+              <td><span class="pill">✓ Market Indexed</span></td>
+            </tr>
+            <tr>
+              <td>Calculated Rate / Sq.Wah</td>
+              <td id="tablePerWa" class="highlight">THB 1,000,000</td>
+              <td><span class="pill">✓ Prime Tier</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ส่วนปุ่ม CTA Row ที่ทำการอัปเดตเพิ่มปุ่ม GitHub -->
+      <div class="cta-row" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <button class="btn btn-primary" onclick="openGallery()" style="flex: 1; min-width: 140px;">
+          <span class="btn-icon">🖼</span> View Site Gallery
+        </button>
+        <button class="btn btn-secondary" onclick="openAnalysis()" style="flex: 1; min-width: 160px;">
+          <span class="btn-icon">📊</span> Run Investment Analysis
+        </button>
+        <!-- ปุ่มที่ 3 ที่เพิ่มเข้ามาใหม่เพื่อเชื่อมต่อไปยัง GitHub Repository ของพี่โจ -->
+        <a href="ใส่ลิงก์_GitHub_Repo_ของพี่โจตรงนี้" target="_blank" class="btn btn-secondary" style="flex: 1; min-width: 150px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: rgba(201,168,76,0.05); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3);">
+          <svg height="14" width="14" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 6px; vertical-align: middle;">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          View Source Repo
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-footer">
+      <div class="contact-info">
+        <strong>JOE COLLECTION</strong>
+        Institutional Real Estate Advisory & Dealmaking<br>
+        ✉ joecollection.m@gmail.com
+      </div>
+      <div class="contact-logo">JOE LAND</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="galleryModal">
+  <div class="modal" style="max-width: 900px;">
+    <div class="modal-header">
+      <div class="modal-title" id="galleryTitle">Asset Photographic Records</div>
+      <button class="modal-close" onclick="closeGallery()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; padding: 10px 0;">
+        <div style="background: #13161e; border: 1px solid rgba(201,168,76,0.15); border-radius: 4px; overflow: hidden;">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="Drone Land View">
+          <div style="padding: 12px; font-size: 11px; color: #c9a84c; font-family: 'Montserrat'; letter-spacing: 0.05em;">01 // AERIAL SITE OUTLINE (DRONE CAPTURE)</div>
+        </div>
+        <div style="background: #13161e; border: 1px solid rgba(201,168,76,0.15); border-radius: 4px; overflow: hidden;">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="Zoning Context">
+          <div style="padding: 12px; font-size: 11px; color: #c9a84c; font-family: 'Montserrat'; letter-spacing: 0.05em;">02 // METROPOLITAN DEVELOPMENT CONTEXT</div>
+        </div>
+        <div style="background: #13161e; border: 1px solid rgba(201,168,76,0.15); border-radius: 4px; overflow: hidden;">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="Infrastructure Connection">
+          <div style="padding: 12px; font-size: 11px; color: #c9a84c; font-family: 'Montserrat'; letter-spacing: 0.05em;">03 // INFRASTRUCTURE & MAIN ROAD ACCESS</div>
+        </div>
+      </div>
+      <p style="font-size: 11px; color: rgba(242,237,230,0.5); text-align: center; margin-top: 15px; font-style: italic;">
+        * Note: High-resolution legal title deed (Chanote) scans and official masterplans are securely held. Contact Joe Collection directly for confidential data-room access.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="analysisModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">AI Investment Analysis & Scenarios</div>
+      <button class="modal-close" onclick="closeAnalysis()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="analysis-section">
+        <div class="analysis-h">AI Strategic Rationale</div>
+        <div id="aiRationale" class="analysis-text">
+          Select parameters and click generate to initiate AI core engine...
+        </div>
+      </div>
+
+      <div class="analysis-section">
+        <div class="analysis-h">Simulated Yield Horizons</div>
+        <div class="kpi-row">
+          <div class="kpi-box">
+            <div id="kpiDensity" class="kpi-val">High</div>
+            <div class="kpi-label">Development Intensity</div>
+          </div>
+          <div class="kpi-box">
+            <div id="kpiEfficiency" class="kpi-val">~85%</div>
+            <div class="kpi-label">Layout Efficiency</div>
+          </div>
+          <div class="kpi-box">
+            <div id="kpiTargetIRR" class="kpi-val">20-24%</div>
+            <div class="kpi-label">Projected Base IRR</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analysis-section">
+        <div class="analysis-h">Risk Matrix (Traffic Light System)</div>
+        <div class="risk-grid">
+          <div class="risk-item">
+            <div class="risk-dot green"></div>
+            <div class="risk-text"><strong>Title Security</strong>Verified Freehold Chanote — Zero litigation risk detected.</div>
+          </div>
+          <div class="risk-item">
+            <div class="risk-dot green"></div>
+            <div class="risk-text"><strong>Infrastructure Edge</strong>Direct access to paved municipal roads and established high-capacity grids.</div>
+          </div>
+          <div class="risk-item">
+            <div class="risk-dot yellow"></div>
+            <div class="risk-text"><strong>Zoning & FAR Alignment</strong>Local construction ordinances require technical planning permissions.</div>
+          </div>
+          <div class="risk-item">
+            <div class="risk-dot red"></div>
+            <div class="risk-text"><strong>Macro Liquidity</strong>Large-scale land plots require a 5-7 year deployment horizon to optimize exits.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analysis-section">
+        <div class="analysis-h">Advisory Conclusion</div>
+        <div id="aiConclusion" class="analysis-text">
+          Awaiting input engine simulation...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
