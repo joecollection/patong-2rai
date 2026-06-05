@@ -425,7 +425,6 @@ body::before {
 .cta-row {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   gap: clamp(10px, 2.5vw, 14px);
 }
 @media(min-width:400px){ .cta-row { flex-direction: row; } }
@@ -449,7 +448,6 @@ body::before {
   position: relative;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
-  text-decoration: none;
 }
 .btn::after {
   content: '';
